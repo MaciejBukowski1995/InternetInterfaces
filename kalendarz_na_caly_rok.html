@@ -1,0 +1,88 @@
+<html>
+	<head>
+	<script>
+		function Month(name,days,first_day,today)
+		{
+			document.write("<table border='1px;' style='text-align:center;'>");
+			document.write("<tr>");
+			document.write("<td colspan='7;'>");
+			document.write(name);
+			document.write("</td>");
+			document.write("</tr>");
+			document.write("<tr>");
+			document.write("<td>PN</td>");
+			document.write("<td>WT</td>");
+			document.write("<td>SR</td>");
+			document.write("<td>CZ</td>");
+			document.write("<td>PT</td>");
+			document.write("<td>SO</td>");
+			document.write("<td>ND</td>");
+			document.write("</tr>");
+			var day = 1;
+			alert(first_day);
+			for(var i=0;i<(days + (first_day-1))/7;i++)
+			{
+				document.write("<tr>");
+				for(var j=0;j<7;j++)
+				{					
+					if(!(j<first_day-1&& i==0)&&day<=days)
+					{
+						if(day == today)
+						{
+							document.write("<td style='background-color: red'>");
+						}
+						else document.write("<td style='background-color: #FFFF00'>");
+						document.write(day);
+						document.write("</td>");
+						day++;
+					}
+					else
+					{
+						document.write("<td>");
+						document.write(" ");
+						document.write("</td>");
+					}					
+				}
+				document.write("</tr>");
+			}
+			document.write("</table>");
+		}
+		function Months()
+		{
+			d = new Date();
+			dzien = d.getDate();
+			miesiac = d.getMonth();
+			rok = d.getYear();
+			month_names = ['Styczeń','Luty','Marzec','Kwiecień','Maj',
+			'Czerwiec','Lipiec','Sierpień','Wrzesień','Październik',
+			'Listopad','Grudzień'];
+			month_sizes = [31,0,31,30,31,30,31,31,30,31,30,31];
+			if((rok - 2012)%4==0)month_sizes[1]=29;
+			else month_sizes[1]=28;
+			
+			dzien_tygodnia = d.getDay() -  1;
+			if(dzien_tygodnia==-1)dzien_tygodnia=7;
+			first_day = dzien_tygodnia - (dzien % 7)+1;
+			if(first_day<0)first_day = 7 + first_day + 1;
+			for(var i = miesiac;i<12;i++)
+			{
+				if(miesiac == i)
+				{
+					Month(month_names[i],month_sizes[i],first_day,dzien);
+				}
+				else
+				{
+					Month(month_names[i],month_sizes[i],first_day,0);
+				}
+				first_day += ((month_sizes[i]%7));
+				if(first_day>7)first_day -= 7;
+			}						
+		}
+	</script>
+	</head>
+	<body>
+		<script>
+		Months();
+		</script>
+	</body>
+</html>

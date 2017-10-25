@@ -1,0 +1,96 @@
+<html>
+<head>
+<style type="text/css"></style>
+<script type="text/javascript" src="jquery.js"></script>
+<script>
+score = 0;
+last_score = 0;
+time = 1800;
+function new_left()
+{
+	left = (Math.random() * ($(window).width() - 200)) + 50;
+	left += 'px';
+	return left;
+}
+function new_top()
+{
+	high = (Math.random() * ($(window).height() - 220)) + 50;
+	high += 'px';
+	return high;
+}
+function decrease_red()
+{
+	$("#czerwony").animate({width:0,height:0},6000);
+}
+function score_up(up)
+{
+	score += up;
+	$("#score").val(score);
+}
+function enable_bonus()
+{
+	tmp = Math.random();
+	if(tmp > 0.5) 
+	{
+		$("#pomaranczowy").stop();
+		$("#pomaranczowy").css({visibility: 'visible'});
+		$("#pomaranczowy").css({left: new_left(),top: new_top(),height: '50px', width: '50px'});
+		$("#pomaranczowy").animate({width:0,height:0},6000);
+	}	
+}
+$(document).ready(function()
+{
+	$("#czerwony").css({left: new_left(),top: new_top(),width: '100px',height: '100px'});	
+	setInterval(function()
+	{		
+		if($("#czerwony").height() == 0)
+		{
+			last_score = score;
+			$("#last_score").val(last_score);
+		}		
+	},1000);
+	$("#czerwony").click(function()
+	{
+		$("#czerwony").stop();
+		setTimeout ( "decrease_red()", time);
+		time += 400;
+		score_up(1);		
+		$("#czerwony").css({left: new_left(),top: new_top()});		
+		enable_bonus();
+	});
+	
+	$("#pomaranczowy").click(function()
+	{
+		score_up(5);
+		$(this).css({visibility: 'hidden'})
+	});
+	
+	$("#reset").click(function()
+	{
+		score = 0;
+		$("#score").val(score);
+		time = 1800;
+		$("#czerwony").stop();
+		$("#pomaranczowy").css({visibility: 'hidden'});	
+		$("#czerwony").css({left: new_left(),top: new_top(),width: '100px',height: '100px'});		
+	});
+});	
+</script>
+</head>
+<body style="background-color: ">
+
+	<h1 style="position:relative">
+		<input type="button" id ="reset" value ="reset" style ="position: relative; width:25%;">
+		<input type="text" id ="last_score" value ="ostatni" style ="position: relative;  width:25%;">
+		<input type="text" id ="score" value ="aktualny" style ="position: relative; width:25%; ">
+		<input type="text" id ="bonus" value ="!!!BONUS!!!" style ="position: relative; background-color:orange; color:white; width:25%;">
+	<h1>
+	<h2 style="position:relative;top:1">
+		<div id="duży" style="position:absolute">
+			<div width ='100px' height ='100px'  id ='czerwony' style ="position: absolute; background-color:red;"></div>
+			<div width ='50px' height ='50px'  id ='pomaranczowy' style ="position: absolute; background-color:orange; visibility: hidden; left:200px; top:200px; display:block"></div>
+		</div>
+	</h2>
+	
+</body>
+</html>

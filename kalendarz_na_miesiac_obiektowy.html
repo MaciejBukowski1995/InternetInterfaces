@@ -1,0 +1,81 @@
+<html>
+	<head>
+	<script>
+		d = new Date();
+		var Month = {
+			dzien :d.getDate(),
+			miesiac :d.getMonth(),
+			rok :d.getYear(),
+			dzien_tygodnia :(d.getDay()-1),	
+			month_names :['Styczeń','Luty','Marzec','Kwiecień','Maj',
+			'Czerwiec','Lipiec','Sierpień','Wrzesień','Październik',
+			'Listopad','Grudzień'],	
+			month_sizes :[31,0,31,30,31,30,31,31,30,31,30,31],
+			first_day:0 ,
+			ini:function()
+			{
+				if((Month.rok - 2012)%4==0)Month.month_sizes[1]=29;
+				else Month.month_sizes[1]=28;	
+				if(Month.dzien_tygodnia==-1)Month.dzien_tygodnia=7;	
+				Month.first_day = Month.dzien_tygodnia - (Month.dzien % 7)+1;								
+				if(Month.first_day<0)Month.first_day = 7 + Month.first_day + 1;
+			},
+			show:function()
+			{
+				document.write("<table border='1px;' style='text-align:center;'>");
+				document.write("<tr>");
+				document.write("<td colspan='7;'>");
+				document.write(Month.month_names[Month.miesiac]);
+				document.write("</td>");
+				document.write("</tr>");
+				document.write("<tr>");
+				document.write("<td>PN</td>");
+				document.write("<td>WT</td>");
+				document.write("<td>SR</td>");
+				document.write("<td>CZ</td>");
+				document.write("<td>PT</td>");
+				document.write("<td>SO</td>");
+				document.write("<td>ND</td>");
+				document.write("</tr>");
+				var days = Month.month_sizes[Month.miesiac];
+				var first_day = Month.first_day;
+				var day = 1;
+				var today = Month.dzien;
+				for(var i=0;i<(days + (first_day-1))/7;i++)
+				{
+					document.write("<tr>");
+					for(var j=0;j<7;j++)
+					{					
+						if(!(j<first_day-1&& i==0)&&day<=days)
+						{
+							if(day == today)
+							{
+								document.write("<td style='background-color: red'>");
+							}
+							else document.write("<td style='background-color: #FFFF00'>");
+							document.write(day);
+							document.write("</td>");
+							day++;
+						}
+						else
+						{
+							document.write("<td>");
+							document.write(" ");
+							document.write("</td>");
+						}					
+					}
+					document.write("</tr>");
+				}
+				document.write("</table>");
+			}
+		};					
+		
+	</script>
+	</head>
+	<body>
+		<script>
+		Month.ini();
+		Month.show();
+		</script>
+	</body>
+</html>

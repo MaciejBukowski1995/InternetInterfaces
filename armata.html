@@ -1,0 +1,153 @@
+<html>
+	<head>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script>
+		ground = '400';			
+		bird_move_tendention = 'right';
+		time = 0;
+		var a = 0;
+		turn = 0;
+		function put_hero()
+		{
+			position = 200 + Math.random() * 800;
+			position += 'px';			
+			document.getElementById("hero").style.left = position;
+			document.getElementById("hero").style.visibility = 'visible';
+			hero_left = parseInt(document.getElementById("hero").style.left);
+			hero_right = hero_left + 100;
+			hero_top = parseInt(document.getElementById("hero").style.top);			
+			hero_down = hero_top + 150;
+		}
+		function get_step()
+		{
+			step = parseInt(document.getElementById("velocity").value);
+		}
+		function move()
+		{
+			ball_left = parseInt(document.getElementById("ball").style.left);
+			ball_top = parseInt(document.getElementById("ball").style.top);
+			ball_left += step * time;
+			ball_top += (9.81 * (time * time)) / 2;
+			if( ball_left > hero_left && (ball_left + 17) < hero_right && ball_top > hero_top)
+			{
+				stop();
+				boom();
+			}
+			else if ((ball_top + 17) > 460)
+			{
+				stop();
+				if(turn < 6) document.getElementById("player_1").value += 0;			
+				else if(turn >= 6 && turn < 11) document.getElementById("player_2").value += 0;
+				if(turn < 11) setTimeout ( "clean()", 2000);
+			}
+			else
+			{
+				ball_left += 'px';
+				ball_top += 'px';
+				time += 0.05;
+				document.getElementById("ball").style.left = ball_left;	
+				document.getElementById("ball").style.top = ball_top;
+			}	
+		}
+		function move_bird()
+		{
+			bird_tmp_left = parseInt(document.getElementById('bird').style.left);
+			if(bird_tmp_left == 1200)
+			{
+				bird_move_tendention = 'left';
+				document.getElementById('bird').src = 'bird_l.gif';
+			}				
+			else if(bird_tmp_left == 150) 
+			{					
+				bird_move_tendention = 'right';
+				document.getElementById('bird').src = 'bird_p.gif';
+			}
+			if(bird_move_tendention == 'right')
+			{					
+				bird_tmp_left += 10;
+			}
+			else bird_tmp_left -= 10;
+			bird_tmp_left +='px';
+			document.getElementById("bird").style.left = bird_tmp_left;				
+			bird_left = bird_tmp_left;
+		}			
+		function stop()
+		{
+			clearInterval(a);
+		}
+		function boom()
+		{
+			document.getElementById("hero").style.visibility = 'hidden';
+			document.getElementById("ball").src = 'boom.jpg';
+			document.getElementById("ball").style.width = '90px';				
+			document.getElementById("ball").style.top = '385px';
+			if(turn < 6) document.getElementById("player_1").value += 1;			
+			else if(turn >= 6 && turn < 11) document.getElementById("player_2").value += 1;
+			if(turn < 11) setTimeout ( "clean()", 2000);
+		}
+		function bird_round_move()
+		{
+			b = setInterval('move_bird()',130);
+		}
+		function get_players_name()
+		{
+			document.getElementById("player_1_name").value = prompt("Please enter player_1 name");
+			document.getElementById("player_2_name").value = prompt("Please enter player_2 name");
+		}
+		function clean()
+		{
+			step = 0;
+			time = 0;
+			stop();
+			put_hero();
+			document.getElementById("ball").style.left = '154px';	
+			document.getElementById("ball").style.top = '106px';
+			document.getElementById("ball").src = 'kula.jpg';
+			document.getElementById("ball").style.width = '17px';
+		}		
+		$(document).ready(function()
+		{
+			get_players_name();
+			bird_round_move();
+			put_hero();
+			$("#reset").click(function()
+			{	
+				clean();
+				turn = 0;
+				document.getElementById("player_1").value = '';
+				document.getElementById("player_2").value = '';			
+			});
+			$("#fire").click(function()
+			{
+				get_step();	
+				if(step < 4)
+				{
+					step = 4;
+				}
+				turn += 1;
+				a = setInterval('move()',130);
+			});
+			function stop()
+			{
+				clearInterval(a);
+			}
+		});
+		</script>		
+	</head>
+	<body>
+		<img width = '100' id = 'hero' style='position:absolute;left:100px;top:300px;visibility:hidden;' src='hero.jpg' >");
+		<img width='17' id = 'ball' style='position:absolute;left:154px;top:106px;visibility:visible;' src='kula.jpg'>
+		<img width='180' id = 'hill' style='position:absolute;left:0px;top:179px;visibility:visible;' src='hill.jpg'>
+		<img width='170' id = 'cannon' style='position:absolute;left:0px;top:100px;visibility:visible;' src='cannon.jpg'>
+		<img width='1000' id = 'ground' style='position:absolute;left:180px;top:450px;visibility:visible;' src='ground.jpg'>
+		<input type='button' id='fire' value='fire' style='position:absolute;left:70px;top:10px;visibility:visible;'>
+		<input type='button' id='reset' value='reset' style='position:absolute;left:115px;top:10px;visibility:visible;'>
+		<input type='text' id='velocity' style='position:absolute;left:10px;top:10px;visibility:visible; width:50px'>
+		<img width='80' id='bird' style='position:absolute;left:500px;top:200;visibility:visible;' src='bird_p.gif'>
+		<input type='text' id='player_1_name' style='position:absolute;left:170px;top:10px;visibility:visible; width:50px'>
+		<input type='text' id='player_2_name' style='position:absolute;left:290px;top:10px;visibility:visible; width:50px'>
+		<input type='text' id='player_1' style='position:absolute;left:230px;top:10px;visibility:visible; width:50px'>
+		<input type='text' id='player_2' style='position:absolute;left:350px;top:10px;visibility:visible; width:50px'>
+		
+	</body>
+</html>

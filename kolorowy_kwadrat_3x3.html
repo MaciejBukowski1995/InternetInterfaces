@@ -1,0 +1,100 @@
+<html>
+<head>
+<style type="text/css"></style>
+<script type="text/javascript" src="jquery.js"></script>
+<script>
+	var colors = ["	#7FFF00","	#FF7F50","orange","	#DAA520","	#ADFF2F","	#4B0082","	#800000",];
+	size = 3;
+	is_first = true;
+	square_size = 120;
+	d_top = square_size;
+	d_left = square_size;
+	tmp_color = "";
+	var colors_state = new Array(size) 
+	for (i = 0; i< size;i++)
+	{ 
+		colors_state[i] = new Array(size); 
+	}
+	function is_full_line( x, y)
+	{ 
+		tmp_x_the_same = 0;
+		tmp_y_the_same = 0;
+		tmp_x_white = 0;
+		tmp_y_white = 0;
+		tmp_color = colors_state[x][y];
+		alert(x);
+		alert(y);
+		alert(tmp_color);
+		/*for(i=0;i<size;i++)
+		{
+			for(j=0;j<size;j++)
+			{
+				alert(colors_state[i][j]);
+			}
+		}*/
+		for(i = 0;i < size;i++ )
+		{
+			if(colors_state[x][i] == tmp_color) tmp_x_the_same += 1;
+			else if(colors_state[x][i] == 'white') tmp_x_white += 1;
+		}
+		for( j = 0;j < size;j++ )
+		{
+			if(colors_state[j][y] == tmp_color) tmp_y_the_same += 1;
+			else if(colors_state[j][y] == 'white') tmp_y_white += 1;
+		}
+		if(tmp_x_the_same + tmp_x_white == size)return '10';
+		else if(tmp_y_the_same + tmp_y_white == size)return '01';
+		else return '00';
+	}
+
+	$(document).ready(function()
+	{
+		for(i = 0 ;i < size;i++)
+		{
+			for(j = 0;j < size;j++)
+			{
+				tmp_color_position =Math.round(Math.random()*6);
+				$("h1").append("<div id = '"+i+j+"' style='position:absolute;left:"+d_left+"px;top:"
+				+d_top+"px;width:"+square_size+"px;height:"+square_size+"px;background-color:" + colors[tmp_color_position]+";'></div>");
+				d_left += square_size;
+				colors_state[i][j] = colors[tmp_color_position];
+			}
+			d_left = square_size;
+			d_top += square_size;
+		}
+		function get_coordinate(id,is_x)	
+		{
+			if(is_x)coordinate = Math.round(id);
+			else coordinate = Math.round(id);
+			return coordinate;
+		}		
+		$("div").click(function(event)
+		{
+			
+			if(is_first)
+			{
+				tmp_color = $(this).css("background-color");
+			}
+			else
+			{
+			alert($(this).css('background'));
+				/*$(this).on('load', function()	{
+				$(this).css("background-color",tmp_color);
+				},alert(is_full_line(get_coordinate(event.target.id / 10,true),get_coordinate(event.target.id % 10,false))));
+				//alert(event.target.id);
+				$(this).css("background-color",tmp_color);
+				//alert(is_full_line(get_coordinate(event.target.id / 10,true),get_coordinate(event.target.id % 10,false)));*/
+			}
+			//alert(is_full_line(get_coordinate(event.target.id / 10,true),get_coordinate(event.target.id % 10,false)));
+			is_first = !is_first; 			
+		});
+	});
+</script>
+</head>
+<body>
+
+	<h1 style="position:rabsolute;top:25px;left:25px;">
+	</h1>
+	
+</body>
+</html>

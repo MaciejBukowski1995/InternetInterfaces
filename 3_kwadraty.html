@@ -1,0 +1,69 @@
+<html>
+<head>
+<style type="text/css"></style>
+<script type="text/javascript" src="jquery.js"></script>
+<script>
+$(document).ready(function(){
+  $("#start_czerwony").click(function()
+  {
+	$("#duży").animate({left:'200px'},5000).animate({top:'200px'},5000)
+				.animate({left:'0px'},5000).animate({top:'0px'},5000);
+  });
+  $("#start_zielony").click(function()
+  {
+	$("#średni").animate({top:'100px'},3000).animate({left:'100px'},3000)
+				.animate({top:'0px'},3000).animate({left:'0px'},3000);
+  });
+  $("#start_niebieski").click(function()
+  {
+	$("#mały").animate({left:'50px',top:'50px'},5000).animate({left:'0px'},5000)
+				.animate({left:'50px',top:'0'},5000).animate({left:'0px'},5000);
+  });
+   $("#stop_czerwony").click(function()
+  {
+	$("#duży").stop().stop().stop().stop();
+  });
+  $("#stop_zielony").click(function()
+  {
+	$("#średni").stop().stop().stop().stop();
+  });
+    $("#stop_niebieski").click(function()
+  {
+	$("#mały").stop().stop().stop().stop();
+  });
+  $("#reset").click(function()
+  {
+	$("#duży").stop().stop().stop().stop();
+	$("#średni").stop().stop().stop().stop();
+	$("#mały").stop().stop().stop().stop();
+	$("#duży").css({left: '0',top: '0'});	
+	$("#średni").css({left: '0',top: '0'});	
+	$("#mały").css({left: '0',top: '0'});	
+  });
+});
+</script>
+</head>
+<body>
+
+	<h1 style="position:relative">
+		<input type="button" id ="start_czerwony" value ="start" style ="position: relative; background-color:red">
+		<input type="button" id ="stop_czerwony" value ="stop" style ="position: relative; background-color:red">
+		<input type="button" id ="start_zielony" value ="start" style ="position: relative; background-color:green">
+		<input type="button" id ="stop_zielony" value ="stop" style ="position: relative; background-color:green">
+		<input type="button" id ="start_niebieski" value ="start" style ="position: relative; background-color:blue">
+		<input type="button" id ="stop_niebieski" value ="stop" style ="position: relative; background-color:blue">
+		<input type="button" id ="reset" value ="reset" style ="position: relative; background-color:grey">
+	<h1>
+	<h2 style="position:relative;top:1">
+	<div id="duży" width ='200px' height ='200px'  style ="position: absolute; background-color:red;">
+		<div  id="średni" style="position:absolute">
+			<div width ='100px' height ='100px'  id ='zielony' style ="position: absolute; background-color:green;"></div>
+			<div id="mały" style="position:absolute">
+				<div width ='50px' height ='50px'  id ='niebieski' style ="position: absolute; background-color:blue;"></div>
+			</div>
+		</div>	
+	</div>
+	</h2>
+	
+</body>
+</html>
